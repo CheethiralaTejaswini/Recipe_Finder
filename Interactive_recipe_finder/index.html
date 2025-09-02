@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <!-- Primary Meta Tags -->
+  <title>RasoiSmart - Indian Recipe Finder & Food Waste Reducer</title>
+  <meta name="title" content="RasoiSmart - Indian Recipe Finder & Food Waste Reducer" />
+  <meta name="description" content="Turn available kitchen ingredients into delicious Indian meals. Smart matching, zero food waste tips, dynamic serving scaler, and step-by-step cooking timer." />
+  <meta name="keywords" content="Indian recipe finder, ingredient search, food waste reducer, Indian cuisine, cook with what you have, paneer, dal, biryani, dosa" />
+  <meta name="author" content="Web Development Internship Project" />
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍛</text></svg>" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Rozha+One&display=swap" rel="stylesheet" />
+
+  <!-- CSS Design System -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar" id="main-nav">
+    <div class="nav-container">
+      <a href="#" class="brand-link" id="brand-home-link" aria-label="RasoiSmart Home">
+        <div class="brand-icon-wrapper">
+          <span>🍛</span>
+        </div>
+        <div class="brand-name-group">
+          <span class="brand-name brand-title">RasoiSmart</span>
+          <span class="brand-tag">Desi Recipe Finder</span>
+        </div>
+      </a>
+
+      <div class="nav-actions">
+        <button class="nav-btn" id="nav-substitutions-btn" title="View Indian Kitchen Substitutions Guide">
+          <span>💡 Substitutes</span>
+        </button>
+        
+        <button class="nav-btn" id="nav-shopping-btn" title="Open Grocery Shopping List">
+          <span>🛒 Grocery</span>
+          <span class="badge-pill" id="shopping-count-badge">0</span>
+        </button>
+
+        <button class="nav-btn" id="nav-favorites-btn" title="View Saved Favorite Recipes">
+          <span>❤️ Saved</span>
+          <span class="badge-pill" id="fav-count-badge">0</span>
+        </button>
+
+        <button class="theme-toggle-btn" id="theme-toggle-btn" title="Switch to Dark Mode" aria-label="Toggle Theme">
+          🌙
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="hero">
+    <div class="hero-pill">
+      <span>🌱 Zero Food Waste</span>
+      <span>•</span>
+      <span>100% Desi Swad</span>
+    </div>
+    <h1 class="hero-title">
+      Cook Magic with What's in Your <span class="highlight">Rasoi</span>
+    </h1>
+    <p class="hero-subtitle">
+      Don't let ingredients go to waste! Enter whatever you have right now—from leftover rice and sour curd to potatoes and lentils—and discover mouthwatering Indian recipes instantly.
+    </p>
+
+    <!-- Live Stats Strip -->
+    <div class="stats-strip">
+      <div class="stat-item">
+        <div class="stat-icon">🥘</div>
+        <div class="stat-content">
+          <div class="stat-number">40+ Dishes</div>
+          <div class="stat-label">Authentic Indian</div>
+        </div>
+      </div>
+
+      <div class="stat-item">
+        <div class="stat-icon">⚡</div>
+        <div class="stat-content">
+          <div class="stat-number">Smart Match</div>
+          <div class="stat-label">Instant % Score</div>
+        </div>
+      </div>
+
+      <div class="stat-item">
+        <div class="stat-icon">♻️</div>
+        <div class="stat-content">
+          <div class="stat-number">Zero Waste</div>
+          <div class="stat-label">Leftover Hacks</div>
+        </div>
+      </div>
+
+      <div class="stat-item">
+        <div class="stat-icon">⏱️</div>
+        <div class="stat-content">
+          <div class="stat-number">Guided Mode</div>
+          <div class="stat-label">Step Timer Alert</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Area -->
+  <main>
+    <!-- Ingredient Station Card -->
+    <section class="ingredient-station" aria-labelledby="station-heading">
+      <div class="station-card">
+        <div class="station-header">
+          <div class="station-title-group">
+            <h2 id="station-heading">What's in your kitchen today?</h2>
+            <p>Add ingredients below to unlock tailored recipes with match percentages.</p>
+          </div>
+          <button class="quick-pantry-trigger-btn" id="btn-open-pantry-modal">
+            <span>📦 Open Categorized Pantry</span>
+          </button>
+        </div>
+
+        <!-- Search Bar with Autocomplete -->
+        <div class="search-box-wrapper">
+          <span class="search-icon-inside">🔍</span>
+          <input
+            type="text"
+            id="ingredient-input"
+            class="search-input-field"
+            placeholder="e.g., paneer, tomato, toor dal, curd, bread, poha..."
+            autocomplete="off"
+            aria-label="Add an ingredient"
+          />
+          <button class="btn-add-ingredient" id="btn-add-ingredient">
+            <span>+ Add to Pantry</span>
+          </button>
+
+          <!-- Autocomplete Dropdown -->
+          <div class="autocomplete-dropdown" id="autocomplete-dropdown"></div>
+        </div>
+
+        <!-- Selected Ingredients Tag Shelf -->
+        <div class="selected-shelf" id="selected-shelf">
+          <div class="shelf-empty-placeholder" id="shelf-placeholder">
+            🛒 Your pantry shelf is empty. Type an ingredient or choose a quick preset below!
+          </div>
+        </div>
+
+        <!-- Quick Presets -->
+        <div class="presets-group" id="pantry-presets">
+          <!-- Populated by JavaScript -->
+        </div>
+
+        <!-- On-Page Quick Tap Ingredient Picker -->
+        <div class="ingredient-picker-section">
+          <div class="picker-header-row">
+            <span class="picker-title">⚡ Quick Tap Ingredients (Click to add/remove from pantry):</span>
+            <div class="picker-tabs" id="picker-category-tabs">
+              <button class="picker-tab active" data-tab="popular">⭐ Popular</button>
+              <button class="picker-tab" data-tab="veggies">🥦 Veggies</button>
+              <button class="picker-tab" data-tab="dairy">🧀 Dairy & Protein</button>
+              <button class="picker-tab" data-tab="grains">🌾 Grains & Flours</button>
+              <button class="picker-tab" data-tab="dals">🟡 Dals & Pulses</button>
+              <button class="picker-tab" data-tab="aromatics">🌿 Aromatics</button>
+            </div>
+          </div>
+          <div class="picker-chips-grid" id="picker-chips-grid">
+            <!-- Populated dynamically by script.js -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Filters & Sort Section -->
+    <section class="filter-section">
+      <div class="filter-bar">
+        <!-- Diet Filter Chips -->
+        <div class="filter-chips-cluster" role="group" aria-label="Dietary Filters">
+          <button class="filter-chip active" data-diet="all">All Diets</button>
+          <button class="filter-chip" data-diet="vegetarian">🌱 Pure Veg</button>
+          <button class="filter-chip" data-diet="vegan">🌿 Vegan</button>
+          <button class="filter-chip" data-diet="non-vegetarian">🍗 Non-Veg</button>
+        </div>
+
+        <!-- Dropdowns & Toggles -->
+        <div class="filter-controls-group">
+          <!-- Meal Type Dropdown -->
+          <div class="select-wrapper">
+            <select class="custom-select" id="meal-select" aria-label="Filter by meal type">
+              <option value="all">All Meal Times</option>
+              <option value="breakfast">Breakfast</option>
+              <option value="lunch">Lunch</option>
+              <option value="dinner">Dinner</option>
+              <option value="snack">Snacks & Street Food</option>
+              <option value="dessert">Sweet & Desserts</option>
+            </select>
+            <span class="select-chevron">▼</span>
+          </div>
+
+          <!-- Sort Select -->
+          <div class="select-wrapper">
+            <select class="custom-select" id="sort-select" aria-label="Sort recipes">
+              <option value="match">Sort by: Best Match %</option>
+              <option value="time">Sort by: Quickest Time</option>
+              <option value="calories">Sort by: Lowest Calories</option>
+              <option value="difficulty">Sort by: Difficulty</option>
+            </select>
+            <span class="select-chevron">▼</span>
+          </div>
+
+          <!-- Ready to cook toggle -->
+          <label class="toggle-switch-label" title="Only display dishes where you have >=70% of ingredients">
+            <input type="checkbox" id="ready-only-toggle" class="toggle-checkbox" />
+            <span>Ready to Cook (≥70%)</span>
+          </label>
+        </div>
+      </div>
+    </section>
+
+    <!-- Key Ingredient Food Selector Strip (Select food based on ingredients) -->
+    <section class="key-food-selector-strip" aria-labelledby="key-food-heading">
+      <div class="key-food-card">
+        <div class="key-food-header">
+          <span id="key-food-heading">🍽️ Select Food by Key Ingredient:</span>
+          <small>Click to view dishes based around specific Indian staples</small>
+        </div>
+        <div class="key-food-chips-wrapper" id="key-food-chips">
+          <button class="key-food-chip active" data-key-food="all">🍽️ All Food</button>
+          <button class="key-food-chip" data-key-food="paneer">🧀 Paneer Dishes</button>
+          <button class="key-food-chip" data-key-food="potato">🥔 Aloo / Potato</button>
+          <button class="key-food-chip" data-key-food="rice">🍚 Rice Specials</button>
+          <button class="key-food-chip" data-key-food="dal">🟡 Dal & Lentils</button>
+          <button class="key-food-chip" data-key-food="chickpeas">🫘 Chole & Rajma</button>
+          <button class="key-food-chip" data-key-food="bread">🍞 Bread Snacks</button>
+          <button class="key-food-chip" data-key-food="egg">🥚 Egg Dishes</button>
+          <button class="key-food-chip" data-key-food="chicken">🍗 Chicken Dishes</button>
+          <button class="key-food-chip" data-key-food="breakfast">🥣 Poha & South Tiffin</button>
+          <button class="key-food-chip" data-key-food="spinach">🥬 Palak & Greens</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Results Header -->
+    <div class="results-header-row">
+      <div class="results-count-text" id="results-count">
+        Showing <span>0</span> Matching Indian Recipes
+      </div>
+    </div>
+
+    <!-- Recipe Grid -->
+    <section class="recipes-grid-container" id="recipes-grid" aria-live="polite">
+      <!-- Populated dynamically by script.js -->
+    </section>
+
+    <!-- Zero-Waste Leftovers Showcase Section -->
+    <section class="leftover-section">
+      <div class="leftover-banner">
+        <div class="leftover-header">
+          <span class="leftover-tag">Kitchen Lifehack</span>
+          <h2>Turn Common Leftovers into Royal Indian Dishes</h2>
+          <p>
+            Got surplus cooked rice, day-old bread, or sour curd? Don't throw them away! Indian cuisine has specialized time-tested recipes specifically invented to revive kitchen leftovers.
+          </p>
+        </div>
+
+        <div class="leftover-cards-grid" id="leftover-cards-container">
+          <!-- Populated dynamically by script.js -->
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Recipe Detail Modal -->
+  <div class="modal-overlay" id="recipe-modal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal-content-container">
+      <!-- Populated dynamically by script.js -->
+    </div>
+  </div>
+
+  <!-- Guided Step-by-Step Cooking Modal (Hands-Free View + Timer) -->
+  <div class="modal-overlay" id="guided-modal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal-content-container" style="max-width: 680px; padding: 2rem;">
+      <button class="modal-close-btn" id="guided-close-btn" aria-label="Close Guided Cooking">&times;</button>
+      
+      <div class="guided-cooking-container">
+        <!-- Step Progress Bar -->
+        <div class="guided-progress-bar-wrap">
+          <div class="guided-progress-fill" id="guided-progress-fill" style="width: 20%;"></div>
+        </div>
+
+        <div class="guided-step-badge" id="guided-step-badge">Step 1 of 5</div>
+
+        <div class="guided-step-content" id="guided-step-text">
+          Prepare ingredients according to recipe instructions.
+        </div>
+
+        <!-- Built-in Cooking Timer -->
+        <div class="cooking-timer-box">
+          <div style="font-size:0.8rem; font-weight:700; text-transform:uppercase; color:var(--text-muted); margin-bottom:0.4rem;">
+            ⏱️ Built-in Step Timer (Beeps when done)
+          </div>
+          <div class="timer-digits" id="timer-digits">05:00</div>
+
+          <div class="timer-presets" id="timer-presets-wrap">
+            <button class="timer-preset-btn" data-timer-preset="120">2 Min</button>
+            <button class="timer-preset-btn" data-timer-preset="300">5 Min</button>
+            <button class="timer-preset-btn" data-timer-preset="600">10 Min</button>
+            <button class="timer-preset-btn" data-timer-preset="900">15 Min</button>
+          </div>
+
+          <div class="timer-controls">
+            <button class="timer-ctrl-btn btn-timer-start" id="btn-timer-toggle">Start ▶️</button>
+            <button class="timer-ctrl-btn btn-timer-reset" id="btn-timer-reset">Reset ↺</button>
+          </div>
+        </div>
+
+        <div class="guided-nav-buttons">
+          <button class="btn-secondary-action" id="btn-guided-prev">← Previous Step</button>
+          <button class="btn-primary-action" id="btn-guided-next">Next Step →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Categorized Pantry Selector Modal -->
+  <div class="modal-overlay" id="pantry-modal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal-content-container" style="padding: 2rem; max-width: 680px;">
+      <button class="modal-close-btn" id="pantry-close-btn" aria-label="Close Pantry">&times;</button>
+      <div style="margin-bottom: 1.5rem;">
+        <h3 style="font-size: 1.4rem; font-weight:800; margin-bottom: 0.3rem;">📦 Indian Pantry Essentials</h3>
+        <p style="font-size: 0.88rem; color: var(--text-muted);">
+          Tap any ingredient to quickly add or remove it from your available items.
+        </p>
+      </div>
+
+      <div class="pantry-modal-grid" id="pantry-categories-container">
+        <!-- Populated dynamically by script.js -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Smart Shopping List Modal -->
+  <div class="modal-overlay" id="shopping-modal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal-content-container" style="padding: 2rem; max-width: 580px;">
+      <button class="modal-close-btn" id="shopping-close-btn" aria-label="Close Shopping List">&times;</button>
+      
+      <div style="margin-bottom: 1.5rem;">
+        <h3 style="font-size: 1.4rem; font-weight:800; margin-bottom: 0.3rem;">🛒 Missing Grocery List</h3>
+        <p style="font-size: 0.88rem; color: var(--text-muted);">
+          Ingredients you need for your chosen recipes. Check them off as you shop or copy to WhatsApp!
+        </p>
+      </div>
+
+      <div class="grocery-list-items" id="shopping-items-container">
+        <!-- Populated dynamically by script.js -->
+      </div>
+
+      <div class="modal-bottom-actions">
+        <button class="btn-primary-action" id="btn-copy-shopping-list">
+          <span>📋 Copy for WhatsApp / SMS</span>
+        </button>
+        <button class="btn-secondary-action" id="btn-clear-shopping-list">
+          <span>🗑️ Clear All</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Kitchen Substitutions Guide Modal -->
+  <div class="modal-overlay" id="substitutions-modal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal-content-container" style="padding: 2rem; max-width: 720px;">
+      <button class="modal-close-btn" id="subs-close-btn" aria-label="Close Substitutions Guide">&times;</button>
+      
+      <div style="margin-bottom: 1.2rem;">
+        <h3 style="font-size: 1.4rem; font-weight:800; margin-bottom: 0.3rem;">💡 Indian Kitchen Substitutions Guide</h3>
+        <p style="font-size: 0.88rem; color: var(--text-muted);">
+          Missing an ingredient? Don't abandon the recipe! Use these authentic desi culinary replacements.
+        </p>
+      </div>
+
+      <div class="subs-search-box">
+        <input 
+          type="text" 
+          id="subs-search-input" 
+          class="search-input-field" 
+          placeholder="Filter substitutes (e.g. curd, cream, tomato, tamarind)..." 
+        />
+      </div>
+
+      <div style="overflow-x: auto; max-height: 400px;">
+        <table class="subs-table">
+          <thead>
+            <tr>
+              <th>Missing Item</th>
+              <th>Smart Desi Substitute</th>
+              <th>Culinary Pro Tip</th>
+            </tr>
+          </thead>
+          <tbody id="subs-table-body">
+            <!-- Populated dynamically by script.js -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toast-container" aria-live="polite"></div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <span>🍛</span>
+        <span class="brand-title">RasoiSmart</span>
+      </div>
+      
+      <p class="footer-desc">
+        Dedicated to minimizing household food waste and making traditional Indian cooking accessible, fun, and economical for students, bachelors, and busy families.
+      </p>
+
+      <div class="footer-internship-badge">
+        <span>✨ Web Development Internship Project</span>
+        <span>•</span>
+        <span>HTML5, Vanilla CSS & Modern JavaScript</span>
+      </div>
+
+      <div class="footer-copyright">
+        © 2026 RasoiSmart • Built with ❤️ for Indian Food Lovers • Zero Food Waste Mission
+      </div>
+    </div>
+  </footer>
+
+  <!-- Application Scripts -->
+  <script src="recipes.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
